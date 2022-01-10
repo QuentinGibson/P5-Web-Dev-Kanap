@@ -2,24 +2,12 @@ document.addEventListener("DOMContentLoaded", index)
 
 
 async function index() {
-  new Promise(async function (resolve, reject) {
-    function handleResponse(response) {
-      if (response.status !== 200) {
-        console.log("There an error loading this product!")
-        reject(console.log(`Status: ${response.status}`))
-      } else {
-        resolve(response.json())
-      }
-    }
-    const url = new URL(document.URL)
-    const searchParams = new URLSearchParams(url.search)
-    const currentId = searchParams.get('id')
-    console.log(currentId)
-    fetch(`http://127.0.0.1:3000/api/products/${currentId}`)
-      .then(response => {
-        handleResponse(response)
-      })
-  })
+  const url = new URL(document.URL)
+  const searchParams = new URLSearchParams(url.search)
+  const currentId = searchParams.get('id')
+
+  await fetch(`http://127.0.0.1:3000/api/products/${currentId}`)
+    .then(response => response.json())
     .then(product => {
       function appendImage() {
         const img_container = document.getElementsByClassName("item__img")[0]
@@ -56,4 +44,36 @@ async function index() {
       appendColors()
     })
     .catch("There was an unknown issue while getting the products. Please check the server and try again!")
+
+  const cartElement = document.getElementById('addToCart');
+  cartElement.addEventListener('click', function () {
+
+    function getCart() {
+      const data = localStorage.getItem("cart")
+      return JSON.parse(data)
+    }
+
+    function updateCart(cart) {
+      localStorage.setItem("cart", JSON.stringify(cart))
+    }
+
+    function addToCart(order) {
+      return [...currentCart, order]
+    }
+
+    function deleteFromCart(id) {
+      return currentCart.filter(item => id !== item._id)
+    }
+
+
+    const currentCart = getCart() || []
+    const order = {
+      "color": document.getElementById("colors").value,
+      "quantity": document.getElementById("quantity").value,
+      "_id": currentId
+    }
+
+    const newCart = addToCart(order)
+    updateCart(newCart)
+  })
 }
