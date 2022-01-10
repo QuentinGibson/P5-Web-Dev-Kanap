@@ -58,7 +58,21 @@ async function index() {
     }
 
     function addToCart(order) {
-      return [...currentCart, order]
+      function indexCart({ _id, color }) {
+        return order._id === _id && order.color === color
+      }
+
+      const existsInCart = currentCart.some(product => indexCart(product))
+      if (existsInCart) {
+        return currentCart.map(product => {
+          if (indexCart(product)) {
+            product.quantity = Number.parseInt(product.quantity) + Number.parseInt(order.quantity)
+          }
+          return product
+        })
+      } else {
+        return [...currentCart, order]
+      }
     }
 
     function deleteFromCart(id) {
