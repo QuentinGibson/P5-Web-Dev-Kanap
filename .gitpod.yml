@@ -1,12 +1,15 @@
 tasks:
   - name: Backend
+    before: cd back
     command: |
-      cd back && npm install && npm run start
+      npm install 
+      npm start
   - name: Frontend
+    before: cd front 
     command: |
-      cd front && npx reload
+      python -m http.server 5500
 ports:
   - port: 3000
     onOpen: ignore
-  - port: 8080
+  - port: 5500
     onOpen: open-preview
