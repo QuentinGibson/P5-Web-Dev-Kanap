@@ -1,0 +1,12 @@
+tasks:
+  - name: Installer
+    init: |
+      brew install neovim
+  - name: Backend
+    init: |
+      npm install
+    command: |
+      npm run start 
+  - name: Frontend
+    command: |
+      npx reload
