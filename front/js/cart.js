@@ -2,20 +2,20 @@ function checkString(string) {
   return typeof string === "string" && Number.isNaN(string)
 }
 
-const cartItemsElement = document.getElementsById('cart__items')
-const cartPriceElement = document.getElementsById('totalQuantity')
+const cartItemsElement = document.getElementById('cart__items')
+const cartPriceElement = document.getElementById('totalQuantity')
 
-const firstNameValue = document.getElementsById('firstName')
-const lastNameValue = document.getElementsById('lastName')
-const addressValue = document.getElementsById('address')
-const cityValue = document.getElementsById('city')
-const email = document.getElementsById('email')
+const firstNameValue = document.getElementById('firstName')
+const lastNameValue = document.getElementById('lastName')
+const addressValue = document.getElementById('address')
+const cityValue = document.getElementById('city')
+const email = document.getElementById('email')
 
-const firstNameErrorMsgElement = document.getElementsById('firstNameErrorMsg')
-const lastNameErrorMsgElement = document.getElementsById('lastNameErrorMsg')
-const addressErrorMsgElement = document.getElementsById('addressErrorMsg')
-const cityErrorMsgElement = document.getElementsById('cityErrorMsg')
-const emailErrorMsgElement = document.getElementsById('emailErrorMsg')
+const firstNameErrorMsgElement = document.getElementById('firstNameErrorMsg')
+const lastNameErrorMsgElement = document.getElementById('lastNameErrorMsg')
+const addressErrorMsgElement = document.getElementById('addressErrorMsg')
+const cityErrorMsgElement = document.getElementById('cityErrorMsg')
+const emailErrorMsgElement = document.getElementById('emailErrorMsg')
 
 const total = (price, quantity) => price * quantity
 const newProductElementString = (product, order) =>
