@@ -6,7 +6,8 @@ async function index() {
   const searchParams = new URLSearchParams(url.search)
   const currentId = searchParams.get('id')
 
-  await fetch(`http://127.0.0.1:3000/api/products/${currentId}`)
+  await fetch(`https://3000-teal-reptile-j1p55ajm.ws-us25.gitpod.io/api/products/${currentId}`)
+
     .then(response => response.json())
     .then(product => {
       function appendImage() {
