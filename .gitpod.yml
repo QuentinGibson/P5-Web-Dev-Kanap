@@ -13,5 +13,5 @@ ports:
     onOpen: ignore
     visibility: public
   - port: 5500
-    onOpen: open-preview
+    onOpen: ignore
     visibility: public
