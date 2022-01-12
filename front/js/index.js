@@ -1,9 +1,9 @@
+const apiUrl = "https://3000-teal-reptile-j1p55ajm.ws-us25.gitpod.io"
 document.addEventListener("DOMContentLoaded", index)
-
 
 async function index() {
   const getJSON = new Promise(async function (resolve, reject) {
-    fetch(`http://127.0.0.1:3000/api/products`)
+    fetch(`${apiUrl}/api/products`)
       .then(response => {
         if (response.status !== 200) {
           console.log("There an error loading the products!")

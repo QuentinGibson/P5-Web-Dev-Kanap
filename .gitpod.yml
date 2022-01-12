@@ -11,5 +11,6 @@ tasks:
 ports:
   - port: 3000
     onOpen: ignore
+    visibility: public
   - port: 5500
     onOpen: open-preview
