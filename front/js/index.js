@@ -1,4 +1,5 @@
-const apiUrl = docuemnt.URL.replace('8080', '3000')
+const apiUrl = document.URL.replace('8080', '3000')
+
 document.addEventListener("DOMContentLoaded", index)
 
 async function index() {
