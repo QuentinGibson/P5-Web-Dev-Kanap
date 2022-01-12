@@ -1,12 +1,13 @@
+const apiUrl = docuemnt.URL.replace('8080', '3000')
 document.addEventListener("DOMContentLoaded", index)
-
 
 async function index() {
   const url = new URL(document.URL)
   const searchParams = new URLSearchParams(url.search)
   const currentId = searchParams.get('id')
 
-  await fetch(`http://127.0.0.1:3000/api/products/${currentId}`)
+  await fetch(`${apiUrl}/api/products/${currentId}`)
+
     .then(response => response.json())
     .then(product => {
       function appendImage() {
