@@ -1,10 +1,13 @@
-const apiUrl = document.URL.replace('8080', '3000')
+const url = new URL(document.URL)
+const apiUrl = new URL(url.hostname.replace('8080', '3000'))
+apiUrl.pathname = "/api/products"
+
 
 document.addEventListener("DOMContentLoaded", index)
 
 async function index() {
-  const getJSON = new Promise(async function (resolve, reject) {
-    fetch(`${apiUrl}/api/products`)
+  new Promise(async function (resolve, reject) {
+    fetch(apiUrl)
       .then(response => {
         if (response.status !== 200) {
           console.log("There an error loading the products!")
