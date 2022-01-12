@@ -14,3 +14,4 @@ ports:
     visibility: public
   - port: 5500
     onOpen: open-preview
+    visibility: public
