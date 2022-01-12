@@ -1,4 +1,4 @@
-const apiUrl = "https://3000-teal-reptile-j1p55ajm.ws-us25.gitpod.io"
+const apiUrl = docuemnt.URL.replace('8080', '3000')
 document.addEventListener("DOMContentLoaded", index)
 
 async function index() {
