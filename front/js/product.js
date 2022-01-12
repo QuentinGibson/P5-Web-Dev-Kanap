@@ -1,8 +1,8 @@
-const apiUrl = document.URL.replace('8080', '3000')
+const url = new URL(document.URL)
+const apiUrl = 'https://' + url.hostname.replace('5500', '3000')
 document.addEventListener("DOMContentLoaded", index)
 
 async function index() {
-  const url = new URL(document.URL)
   const searchParams = new URLSearchParams(url.search)
   const currentId = searchParams.get('id')
 
@@ -51,6 +51,9 @@ async function index() {
 
     function getCart() {
       const data = localStorage.getItem("cart")
+      if (data === '' || data === null || data === undefined) {
+        return []
+      }
       return JSON.parse(data)
     }
 
@@ -64,15 +67,19 @@ async function index() {
       }
 
       const existsInCart = currentCart.some(product => indexCart(product))
-      if (existsInCart) {
-        return currentCart.map(product => {
-          if (indexCart(product)) {
-            product.quantity = Number.parseInt(product.quantity) + Number.parseInt(order.quantity)
-          }
-          return product
-        })
+      if (order.quantity > 0) {
+        if (existsInCart) {
+          return currentCart.map(product => {
+            if (indexCart(product)) {
+              product.quantity = Number.parseInt(product.quantity) + Number.parseInt(order.quantity)
+            }
+            return product
+          })
+        } else {
+          return [...currentCart, order]
+        }
       } else {
-        return [...currentCart, order]
+        return currentCart
       }
     }
 
@@ -89,6 +96,7 @@ async function index() {
     }
 
     const newCart = addToCart(order)
+    console.log(newCart)
     updateCart(newCart)
   })
 }
