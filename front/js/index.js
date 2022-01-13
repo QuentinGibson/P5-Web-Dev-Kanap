@@ -1,6 +1,3 @@
-const url = new URL(document.URL)
-const apiUrl = 'https://' + url.hostname.replace('5500', '3000')
-
 document.addEventListener("DOMContentLoaded", index)
 
 async function index() {

@@ -1,3 +1,6 @@
+const url = new URL(document.URL)
+const apiUrl = 'https://' + url.hostname.replace('5500', '3000')
+
 function getCart() {
   const data = localStorage.getItem("cart")
   if (data === '' || data === null || data === undefined) {
