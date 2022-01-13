@@ -48,55 +48,11 @@ async function index() {
 
   const cartElement = document.getElementById('addToCart');
   cartElement.addEventListener('click', function () {
-
-    function getCart() {
-      const data = localStorage.getItem("cart")
-      if (data === '' || data === null || data === undefined) {
-        return []
-      }
-      return JSON.parse(data)
-    }
-
-    function updateCart(cart) {
-      localStorage.setItem("cart", JSON.stringify(cart))
-    }
-
-    function addToCart(order) {
-      function indexCart({ _id, color }) {
-        return order._id === _id && order.color === color
-      }
-
-      const existsInCart = currentCart.some(product => indexCart(product))
-      if (order.quantity > 0) {
-        if (existsInCart) {
-          return currentCart.map(product => {
-            if (indexCart(product)) {
-              product.quantity = Number.parseInt(product.quantity) + Number.parseInt(order.quantity)
-            }
-            return product
-          })
-        } else {
-          return [...currentCart, order]
-        }
-      } else {
-        return currentCart
-      }
-    }
-
-    function deleteFromCart(id) {
-      return currentCart.filter(item => id !== item._id)
-    }
-
-
-    const currentCart = getCart() || []
     const order = {
       "color": document.getElementById("colors").value,
       "quantity": document.getElementById("quantity").value,
       "_id": currentId
     }
-
-    const newCart = addToCart(order)
-    console.log(newCart)
-    updateCart(newCart)
+    addProduct(order)
   })
 }
