@@ -41,17 +41,38 @@ const generateProductElement = (product, order) =>
       </div>
     </div>
   </article>`
-const productElementPromises = cart.map(async order => {
+const productElementPromises = cart.map(async (order, index) => {
   const { _id } = order
   return await fetch(`${apiUrl}/api/products/${_id}`)
     .then(response => {
-      return response.json()
-        .then(product => generateProductElement(product, order))
+      return response.json().then(product => {
+        const productElement = generateProductElement(product, order)
+        return [productElement, index]
+      })
     })
 })
 
 Promise.all(productElementPromises)
-  .then(element => {
-    const frag = document.createRange().createContextualFragment(element)
-    cartItemsElement.appendChild(frag)
+  .then(response => {
+    for (data of response) {
+      const element = data[0]
+      const index = data[1]
+      function handleDeleteButtonClick(event) {
+        const articleElement = event.target.closest('article.cart__item')
+        articleElement.remove()
+        deleteOrder(index)
+      }
+      function handleQuantityChange(event) {
+        const newValue = event.target.value
+        cart[index].quantity = newValue
+        updateOrder(index, cart[index])
+      }
+
+      const frag = document.createRange().createContextualFragment(element)
+      //TODO: When I add these line all the products do not show on the cart page
+      frag.querySelector('.itemQuantity').addEventListener('change', handleQuantityChange)
+      frag.querySelector('.deleteItem').addEventListener('click', handleDeleteButtonClick)
+
+      cartItemsElement.appendChild(frag)
+    }
   })

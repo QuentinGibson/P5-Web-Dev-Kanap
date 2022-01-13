@@ -8,6 +8,11 @@ function getCart() {
   }
   return JSON.parse(data)
 }
+function deleteOrder(_index) {
+  const cart = getCart()
+  const newCart = cart.filter((product, index) => index !== _index)
+  updateCart(newCart)
+}
 
 function updateCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart))
@@ -36,13 +41,8 @@ function addProduct(order) {
   updateCart(cart)
 }
 
-function updateProduct(id, data) {
-  cart = getCart();
-  for (let product of cart) {
-    let { _id } = product;
-    if (id === _id) {
-      cart[i] = data
-    }
-  }
+function updateOrder(index, data) {
+  const cart = getCart();
+  cart[index] = data;
   updateCart(cart)
 }
