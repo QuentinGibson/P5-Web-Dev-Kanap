@@ -1,3 +1,4 @@
+let cart = getCart();
 function checkString(string) {
   return typeof string === "string" && Number.isNaN(string)
 }
@@ -27,7 +28,7 @@ const newProductElementString = (product, order) =>
       <div class="cart__item__content__description">
         <h2>${product.name}</h2>
         <p>${order.color}</p>
-        <p>€${order.price}</p>
+        <p>€${total(product.price, order.quantity)}</p>
       </div>
       <div class="cart__item__content__settings">
         <div class="cart__item__content__settings__quantity">
@@ -40,3 +41,14 @@ const newProductElementString = (product, order) =>
       </div>
     </div>
   </article>`
+const generateProductElement = async order => {
+  const { _id } = order
+}
+const productElementList = cart.map(async order => {
+  await fetch(`${apiUrl}/api/products/${_id}`)
+    .then(product => { return newProductElementString(product, order) })
+
+  return await generateProductElement(order)
+})
+
+productElementList.forEach(element => cartItemsElement.appendChild(element))
