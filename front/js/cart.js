@@ -19,7 +19,7 @@ const cityErrorMsgElement = document.getElementById('cityErrorMsg')
 const emailErrorMsgElement = document.getElementById('emailErrorMsg')
 
 const total = (price, quantity) => price * quantity
-const newProductElementString = (product, order) =>
+const generateProductElement = (product, order) =>
   `<article class="cart__item" data-id="${product._id}" data-color="${order.color}">
     <div class="cart__item__img">
       <img src="${product.imageUrl}" alt="${product.altText}">
@@ -41,14 +41,17 @@ const newProductElementString = (product, order) =>
       </div>
     </div>
   </article>`
-const generateProductElement = async order => {
+const productElementPromises = cart.map(async order => {
   const { _id } = order
-}
-const productElementList = cart.map(async order => {
-  await fetch(`${apiUrl}/api/products/${_id}`)
-    .then(product => { return newProductElementString(product, order) })
-
-  return await generateProductElement(order)
+  return await fetch(`${apiUrl}/api/products/${_id}`)
+    .then(response => {
+      return response.json()
+        .then(product => generateProductElement(product, order))
+    })
 })
 
-productElementList.forEach(element => cartItemsElement.appendChild(element))
+Promise.all(productElementPromises)
+  .then(element => {
+    const frag = document.createRange().createContextualFragment(element)
+    cartItemsElement.appendChild(frag)
+  })
