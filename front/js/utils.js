@@ -26,7 +26,7 @@ function addProduct(order) {
   }
 
   const existsInCart = cart.some(product => indexCart(product))
-  if (order.quantity > 0) {
+  if (order.quantity > 0 && order.color !== '') {
     if (existsInCart) {
       return cart.map(combineLikeItems)
     } else {
