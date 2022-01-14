@@ -6,17 +6,7 @@ function checkString(string) {
 const cartItemsElement = document.getElementById('cart__items')
 const cartPriceElement = document.getElementById('totalQuantity')
 
-const firstNameValue = document.getElementById('firstName')
-const lastNameValue = document.getElementById('lastName')
-const addressValue = document.getElementById('address')
-const cityValue = document.getElementById('city')
-const email = document.getElementById('email')
 
-const firstNameErrorMsgElement = document.getElementById('firstNameErrorMsg')
-const lastNameErrorMsgElement = document.getElementById('lastNameErrorMsg')
-const addressErrorMsgElement = document.getElementById('addressErrorMsg')
-const cityErrorMsgElement = document.getElementById('cityErrorMsg')
-const emailErrorMsgElement = document.getElementById('emailErrorMsg')
 
 const total = (price, quantity) => price * quantity
 const generateProductElement = (product, order) =>
