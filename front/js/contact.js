@@ -52,7 +52,7 @@ if (formValidity) {
   if (!checkValidity(lastName)) {
     lastNameErrorMsgElement.innerHTML = `<p>Please enter a valid last name.</p>`
   }
-  if (!checkValidity(adress)) {
+  if (!checkValidity(address)) {
     addressErrorMsgElement.innerHTML = `<p>Please enter a valid address.</p>`
   }
   if (!checkValidity(city)) {
