@@ -1,5 +1,5 @@
 const firstName = document.getElementById('firstName')
-const lasstName = document.getElementById('lastName')
+const lastName = document.getElementById('lastName')
 const address = document.getElementById('address')
 const city = document.getElementById('city')
 const email = document.getElementById('email')
