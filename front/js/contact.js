@@ -21,7 +21,7 @@ function handleSubmit(event) {
     city: city.value,
     email: email.value
   }
-  const productTablePromise = () => {
+  function generateProductTablePromiseData() {
     const cart = getCart()
     return cart.map(async product => {
       let total
@@ -34,13 +34,14 @@ function handleSubmit(event) {
         })
     })
   }
+  const productTablePromise = generateProductTablePromiseData()
   Promise.all(productTablePromise)
     .then(productTableData => {
       const productTable = JSON.stringify(productTableData)
       localStorage.setItem("productTable", productTable)
     })
 
-  const contactString = JSON.stringiify(contact)
+  const contactString = JSON.stringify(contact)
   localStorage.setItem("contact", contactString)
 }
 
