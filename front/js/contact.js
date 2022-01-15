@@ -34,10 +34,12 @@ function checkout() {
 
   }
   Promise.all(productTablePromise)
-    .then(productTable => {
+    .then(productTableData => {
+      const productTable = JSON.stringify(productTableData)
       localStorage.setItem("productTable", productTable)
     })
-  localStorage.setItem("contact", contact)
+  const contactString = JSON.stringiify(contact)
+  localStorage.setItem("contact", contactString)
 }
 function checkValidity(inputElement) {
   return inputElement.validity.valid
