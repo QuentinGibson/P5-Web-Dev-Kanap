@@ -1,3 +1,4 @@
+const form = document.querySelector('form')
 const firstName = document.getElementById('firstName')
 const lastName = document.getElementById('lastName')
 const address = document.getElementById('address')
@@ -11,7 +12,8 @@ const cityErrorMsgElement = document.getElementById('cityErrorMsg')
 const emailErrorMsgElement = document.getElementById('emailErrorMsg')
 
 const formValidity = document.querySelector('form').checkValidity();
-function checkout() {
+
+function handleSubmit(event) {
   const contact = {
     firstName: firstName.value,
     lastName: lastName.value,
@@ -31,36 +33,36 @@ function checkout() {
           return product
         })
     })
-
   }
   Promise.all(productTablePromise)
     .then(productTableData => {
       const productTable = JSON.stringify(productTableData)
       localStorage.setItem("productTable", productTable)
     })
+
   const contactString = JSON.stringiify(contact)
   localStorage.setItem("contact", contactString)
 }
-function checkValidity(inputElement) {
-  return inputElement.validity.valid
-}
 
-if (formValidity) {
-  checkout()
-} else {
-  if (!checkValidity(firstName)) {
-    firstNameErrorMsgElement.innerHTML = `<p>Please enter a valid first name.</p>`
-  }
-  if (!checkValidity(lastName)) {
-    lastNameErrorMsgElement.innerHTML = `<p>Please enter a valid last name.</p>`
-  }
-  if (!checkValidity(address)) {
-    addressErrorMsgElement.innerHTML = `<p>Please enter a valid address.</p>`
-  }
-  if (!checkValidity(city)) {
-    cityErrorMsgElement.innerHTML = `<p>Please enter a valid city.</p>`
-  }
-  if (!checkValidity(email)) {
-    emailErrorMsgElement.innerHTML = `<p>Please enter a valid email.</p>`
-  }
-}
+firstName.addEventListener('invalid', (event) => {
+  event.preventDefault();
+  firstNameErrorMsgElement.innerHTML = `<p>Please enter a valid first name.</p>`
+})
+lastName.addEventListener('invalid', (event) => {
+  event.preventDefault()
+  lastNameErrorMsgElement.innerHTML = `<p>Please enter a valid last name.</p>`
+})
+address.addEventListener('invalid', (event) => {
+  event.preventDefault()
+  addressErrorMsgElement.innerHTML = `<p>Please enter a valid address.</p>`
+})
+city.addEventListener('invalid', (event) => {
+  event.preventDefault()
+  cityErrorMsgElement.innerHTML = `<p>Please enter a valid city.</p>`
+})
+email.addEventListener('invalid', (event) => {
+  event.preventDefault()
+  emailErrorMsgElement.innerHTML = `<p>Please enter a valid email.</p>`
+})
+
+form.addEventListener('submit', handleSubmit)
