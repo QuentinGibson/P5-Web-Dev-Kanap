@@ -33,18 +33,22 @@ function handleSubmit(event) {
     localStorage.setItem("productTable", productTableString)
   }
   async function sendPOST(contact, products) {
-    await fetch(`${apiUrl}/order`, {
+    await fetch(`${apiUrl}/api/products/order`, {
       method: 'post',
-      body: {
-        contact,
-        products
-      }
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        contact: contact,
+        products: products
+      })
     })
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           response.json()
             .then(json => {
-              confirmation
+              console.log(json)
             })
         } else {
           console.log(response.status)
