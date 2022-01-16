@@ -14,6 +14,8 @@ const emailErrorMsgElement = document.getElementById('emailErrorMsg')
 const formValidity = document.querySelector('form').checkValidity();
 
 function handleSubmit(event) {
+  const cart = getCart()
+  const productTable = cart.map(({ _id }) => _id)
   const contact = {
     firstName: firstName.value,
     lastName: lastName.value,
@@ -21,49 +23,21 @@ function handleSubmit(event) {
     city: city.value,
     email: email.value
   }
-  function generateProductTablePromiseData() {
-    const cart = getCart()
-    return cart.map(async product => {
-      let total
-      return await fetch(`${apiUrl}/api/products/${product._id}`)
-        .then(response => response.json())
-        .then(json => {
-          total = json.price * product.quantity
-          product.total = total
-          return product
-        })
-    })
-  }
-  const productTablePromise = generateProductTablePromiseData()
-  Promise.all(productTablePromise)
-    .then(productTableData => {
-      const productTable = JSON.stringify(productTableData)
-      localStorage.setItem("productTable", productTable)
-    })
-
   const contactString = JSON.stringify(contact)
+  const productTableString = JSON.stringify(productTable)
+  localStorage.setItem("productTable", productTableString)
   localStorage.setItem("contact", contactString)
 }
-
-firstName.addEventListener('invalid', (event) => {
-  event.preventDefault();
-  firstNameErrorMsgElement.innerHTML = `<p>Please enter a valid first name.</p>`
-})
-lastName.addEventListener('invalid', (event) => {
-  event.preventDefault()
-  lastNameErrorMsgElement.innerHTML = `<p>Please enter a valid last name.</p>`
-})
-address.addEventListener('invalid', (event) => {
-  event.preventDefault()
-  addressErrorMsgElement.innerHTML = `<p>Please enter a valid address.</p>`
-})
-city.addEventListener('invalid', (event) => {
-  event.preventDefault()
-  cityErrorMsgElement.innerHTML = `<p>Please enter a valid city.</p>`
-})
-email.addEventListener('invalid', (event) => {
-  event.preventDefault()
-  emailErrorMsgElement.innerHTML = `<p>Please enter a valid email.</p>`
-})
+function customInvalid(input, errorElement, message) {
+  input.addEventListener('invalid', (event) => {
+    event.preventDefault()
+    errorElement.innerHTML = message
+  })
+}
+customInvalid(firstName, firstNameErrorMsgElement, `<p>Please enter a valid first name.</p>`)
+customInvalid(lastName, lastNameErrorMsgElement, `<p>Please enter a valid last name.</p>`)
+customInvalid(address, addressErrorMsgElement, `<p>Please enter a valid address.</p>`)
+customInvalid(city, cityErrorMsgElement, `<p>Please enter a valid city.</p>`)
+customInvalid(email, emailErrorMsgElement, `<p>Please enter a valid email.</p>`)
 
 form.addEventListener('submit', handleSubmit)
