@@ -14,6 +14,7 @@ const emailErrorMsgElement = document.getElementById('emailErrorMsg')
 const formValidity = document.querySelector('form').checkValidity();
 
 function handleSubmit(event) {
+  event.preventDefault()
   const cart = getCart()
   const productTable = cart.map(({ _id }) => _id)
   const contact = {
@@ -23,10 +24,40 @@ function handleSubmit(event) {
     city: city.value,
     email: email.value
   }
-  const contactString = JSON.stringify(contact)
-  const productTableString = JSON.stringify(productTable)
-  localStorage.setItem("productTable", productTableString)
-  localStorage.setItem("contact", contactString)
+  function saveContact(contact) {
+    const contactString = JSON.stringify(contact)
+    localStorage.setItem("contact", contactString)
+  }
+  function saveProductTable(productTable) {
+    const productTableString = JSON.stringify(productTable)
+    localStorage.setItem("productTable", productTableString)
+  }
+  async function sendPOST(contact, products) {
+    await fetch(`${apiUrl}/order`, {
+      method: 'post',
+      body: {
+        contact,
+        products
+      }
+    })
+      .then(response => {
+        if (response.status === 200) {
+          response.json()
+            .then(json => {
+              confirmation
+            })
+        } else {
+          console.log(response.status)
+        }
+      })
+      .catch(err => {
+        console.log('There was an issue with the POST request')
+        console.log(`Error: ${err}`)
+      })
+  }
+  saveContact(contact)
+  saveProductTable(productTable)
+  sendPOST(contact, productTable)
 }
 function customInvalid(input, errorElement, message) {
   input.addEventListener('invalid', (event) => {
