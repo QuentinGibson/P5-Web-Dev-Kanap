@@ -1,21 +1,24 @@
 const Cart = require('../utils.js')
-console.log(Cart)
 
 describe("localStorage: cart", () => {
+  let store
   beforeEach(() => {
-    const cart = [{ name: "fries" }, { name: "burger" }, { name: "shake" }]
-    const store = new Cart(cart);
+    store = new Cart([{ name: "fries", quantity: 1, color: 'yellow' }, { name: "burger", quantity: 1, color: "brown" }, { name: "shake", quantity: 2, color: "pink" }])
   })
   test("should read cart", () => {
-    expect(store.cart.toBe(cart))
+    expect(store.cart).toBeTruthy()
   })
   test("should remove product fom the cart", () => {
-    const expectedResult = [{ name: "burger" }, { name: "shake" }]
+    const expectedResult = [{ name: "burger", quantity: 1, color: "brown" }, { name: "shake", quantity: 2, color: "pink" }]
     const index = 0
-    expect(cart.deleteProduct(index).toBe(expectedResult))
+    store.deleteProduct(index)
+    store.write()
+    expect(store.cart).toEqual(expectedResult)
   })
   test("should be able to create product to the cart", () => {
-    const expectedResult = [{ name: "fries" }, { name: "burger" }, { name: "shake" }, { name: 'onion rings' }]
-    expect(cart.addProduct({ name: "onion rings" }).toEqual(expectedResult))
+    const expectedResult = [{ name: "fries", quantity: 1, color: 'yellow' }, { name: "burger", quantity: 1, color: "brown" }, { name: "shake", quantity: 2, color: "pink" }, { name: "onion rings", quantity: 1, color: "brown" }]
+    store.addProduct({ name: "onion rings", quantity: 1, color: "brown" })
+    store.write()
+    expect(store.cart).toEqual(expectedResult)
   })
 })

@@ -1,5 +1,3 @@
-const { moduleExpression } = require("@babel/types")
-
 const url = new URL(document.URL)
 const apiUrl = 'https://' + url.hostname.replace('5500', '3000')
 
@@ -22,29 +20,28 @@ class Cart {
     this.cart = this.cart.filter((_product, index) => index !== _index)
   }
   exists(product) {
-    this.cart.forEach(element => {
+    this.cart.some(element => {
       const { _color, _id } = element
       const { color, id } = product
-      if (_color === color && id === _id) {
-        return true
-      }
+      return (_color === color && id === _id)
     });
-    return false
   }
 
   addProduct(order) {
-    const existsInCart = this.cart.some(product => this.cart.exists(product))
-    const isSameOrder = order.quantity > 0 && order.color !== ''
-
+    const isValidOrder = order.quantity > 0 && order.color !== ''
     function combineSameProducts(product) {
       function appendOrderToProduct(order) {
         product.quantity = Number.parseInt(product.quantity) + Number.parseInt(order.quantity)
       }
-      return this.cart.exists(product) ? appendOrderToProduct(order) : product
+      return this.exists(product) ? appendOrderToProduct(order) : product
     }
 
-    if (isSameOrder) {
-      this.cart = existsInCart ? this.cart.map(combineSameProducts) : this.cart = [...cart, order]
+    if (isValidOrder) {
+      if (this.exists(order)) {
+        this.cart.map(combineSameProducts)
+      } else {
+        this.cart = [...this.cart, order]
+      }
     }
   }
 
