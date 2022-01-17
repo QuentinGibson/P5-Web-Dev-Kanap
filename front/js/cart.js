@@ -1,16 +1,10 @@
 let cart = getCart();
-function checkString(string) {
-  return typeof string === "string" && Number.isNaN(string)
-}
-
+const productElementPromises = cart.map(createProductElement)
 const cartItemsElement = document.getElementById('cart__items')
 const cartPriceElement = document.getElementById('totalQuantity')
 
-
-
-const total = (price, quantity) => price * quantity
-const generateProductElement = (product, order) =>
-  `<article class="cart__item" data-id="${product._id}" data-color="${order.color}">
+function generateProductElement(product, order) {
+  return `<article class="cart__item" data-id="${product._id}" data-color="${order.color}">
     <div class="cart__item__img">
       <img src="${product.imageUrl}" alt="${product.altText}">
     </div>
@@ -31,22 +25,35 @@ const generateProductElement = (product, order) =>
       </div>
     </div>
   </article>`
-const productElementPromises = cart.map(async (order, index) => {
+}
+async function createProductElement() {
   const { _id } = order
   return await fetch(`${apiUrl}/api/products/${_id}`)
     .then(response => {
-      return response.json().then(product => {
-        const productElement = generateProductElement(product, order)
-        return [productElement, index]
-      })
+      if (response.status === 200) {
+        return response.json()
+          .then(product => {
+            const productElement = generateProductElement(product, order)
+            return [productElement, index]
+          })
+      } else {
+        console.log(response.status)
+        console.error("There was a problem with the server")
+      }
     })
-})
-
+}
+function total(price, quantity) {
+  return price * quantity
+}
+function checkString(string) {
+  return typeof string === "string" && Number.isNaN(string)
+}
 Promise.all(productElementPromises)
   .then(response => {
     for (data of response) {
       const element = data[0]
       const index = data[1]
+
       function handleDeleteButtonClick(event) {
         const articleElement = event.target.closest('article.cart__item')
         articleElement.remove()
@@ -58,11 +65,14 @@ Promise.all(productElementPromises)
         updateOrder(index, cart[index])
       }
 
-      const frag = document.createRange().createContextualFragment(element)
-      //TODO: When I add these line all the products do not show on the cart page
-      frag.querySelector('.itemQuantity').addEventListener('change', handleQuantityChange)
-      frag.querySelector('.deleteItem').addEventListener('click', handleDeleteButtonClick)
+      function appendFragToDocument() {
+        const frag = document.createRange().createContextualFragment(element)
+        //TODO: When I add these line all the products do not show on the cart page
+        frag.querySelector('.itemQuantity').addEventListener('change', handleQuantityChange)
+        frag.querySelector('.deleteItem').addEventListener('click', handleDeleteButtonClick)
+        cartItemsElement.appendChild(frag)
+      }
 
-      cartItemsElement.appendChild(frag)
+      appendFragToDocument()
     }
   })

@@ -13,8 +13,8 @@ async function index() {
       })
   })
     .then(json => {
-      const itemsElement = document.getElementById('items')
-      json.map(product => {
+      function createItem(product) {
+        const itemsElement = document.getElementById('items')
         const link = document.createElement('a')
         const aside = document.createElement("aside")
         const image = document.createElement("img")
@@ -24,7 +24,6 @@ async function index() {
         link.id = "product"
         link.href = `./product.html?id=${product._id}`
         link.appendChild(aside)
-
 
         image.src = `${product.imageUrl}`
         image.alt = `An image of one of our amazing furniture, this piece is named ${product.name}`
@@ -40,7 +39,8 @@ async function index() {
         aside.appendChild(description)
 
         itemsElement.appendChild(link)
-      })
+      }
+      json.map(product => createItem(product))
     })
     .catch("There was an unknown issue while getting the products. Please check the server and try again!")
 }
