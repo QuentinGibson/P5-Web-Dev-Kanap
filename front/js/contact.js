@@ -48,7 +48,7 @@ function handleSubmit(event) {
         if (response.status === 201) {
           response.json()
             .then(json => {
-              console.log(json)
+              window.location.replace(`confirmation.html?id=${json.orderId}`);
             })
         } else {
           console.log(response.status)
@@ -62,6 +62,7 @@ function handleSubmit(event) {
   saveContact(contact)
   saveProductTable(productTable)
   sendPOST(contact, productTable)
+  return false;
 }
 function customInvalid(input, errorElement, message) {
   input.addEventListener('invalid', (event) => {
