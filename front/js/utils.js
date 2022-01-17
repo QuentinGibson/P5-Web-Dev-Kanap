@@ -8,7 +8,7 @@ class Cart {
     if (cart) {
       this.cart = cart
     } else {
-      this.cart = getCart()
+      this.cart = this.getCart()
     }
   }
   getCart() {
