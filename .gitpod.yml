@@ -1,12 +1,17 @@
 tasks:
-  - name: Installer
-    init: |
-      brew install neovim
   - name: Backend
-    init: |
-      npm install
+    before: cd back
     command: |
-      npm run start 
+      npm install 
+      npm start
   - name: Frontend
+    before: cd front 
     command: |
-      npx reload
+      python -m http.server 5500
+ports:
+  - port: 3000
+    onOpen: ignore
+    visibility: public
+  - port: 5500
+    onOpen: ignore
+    visibility: public

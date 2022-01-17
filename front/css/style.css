@@ -266,3 +266,7 @@ footer .footerSecondary {
 		width: 75%;
 	}
 }
+
+#product img {
+	width: 100%
+}
