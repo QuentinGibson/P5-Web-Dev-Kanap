@@ -10,7 +10,7 @@ function getCart() {
 }
 function deleteOrder(_index) {
   const cart = getCart()
-  const newCart = cart.filter((product, index) => index !== _index)
+  const newCart = cart.filter((_product, index) => index !== _index)
   updateCart(newCart)
 }
 
@@ -20,18 +20,20 @@ function updateCart(cart) {
 
 function addProduct(order) {
   let cart = getCart();
+  const existsInCart = cart.some(product => indexCart(product))
+  const isSameOrder = order.quantity > 0 && order.color !== ''
+
   function indexCart({ _id, color }) {
     return order._id === _id && order.color === color
   }
-  const combineLikeItems = product => {
+  function combineLikeItems(product) {
     if (indexCart(product)) {
       product.quantity = Number.parseInt(product.quantity) + Number.parseInt(order.quantity)
     }
     return product
   }
 
-  const existsInCart = cart.some(product => indexCart(product))
-  if (order.quantity > 0 && order.color !== '') {
+  if (isSameOrder) {
     if (existsInCart) {
       return cart.map(combineLikeItems)
     } else {
