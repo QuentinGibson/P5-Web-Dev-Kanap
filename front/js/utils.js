@@ -1,50 +1,59 @@
+const { moduleExpression } = require("@babel/types")
+
 const url = new URL(document.URL)
 const apiUrl = 'https://' + url.hostname.replace('5500', '3000')
 
-function getCart() {
-  const data = localStorage.getItem("cart")
-  if (data === '' || data === null || data === undefined) {
-    return []
-  }
-  return JSON.parse(data)
-}
-function deleteOrder(_index) {
-  const cart = getCart()
-  const newCart = cart.filter((_product, index) => index !== _index)
-  updateCart(newCart)
-}
-
-function updateCart(cart) {
-  localStorage.setItem("cart", JSON.stringify(cart))
-}
-
-function addProduct(order) {
-  let cart = getCart();
-  const existsInCart = cart.some(product => indexCart(product))
-  const isSameOrder = order.quantity > 0 && order.color !== ''
-
-  function indexCart({ _id, color }) {
-    return order._id === _id && order.color === color
-  }
-  function combineLikeItems(product) {
-    if (indexCart(product)) {
-      product.quantity = Number.parseInt(product.quantity) + Number.parseInt(order.quantity)
-    }
-    return product
-  }
-
-  if (isSameOrder) {
-    if (existsInCart) {
-      return cart.map(combineLikeItems)
+class Cart {
+  constructor(cart) {
+    if (cart) {
+      this.cart = cart
     } else {
-      cart = [...cart, order]
+      this.cart = getCart()
     }
   }
-  updateCart(cart)
-}
+  getCart() {
+    const data = localStorage.getItem("cart")
+    if (data === '' || data === null || data === undefined) {
+      return []
+    }
+    return JSON.parse(data)
+  }
+  deleteProduct(_index) {
+    this.cart = this.cart.filter((_product, index) => index !== _index)
+  }
+  exists(product) {
+    this.cart.forEach(element => {
+      const { _color, _id } = element
+      const { color, id } = product
+      if (_color === color && id === _id) {
+        return true
+      }
+    });
+    return false
+  }
 
-function updateOrder(index, data) {
-  const cart = getCart();
-  cart[index] = data;
-  updateCart(cart)
+  addProduct(order) {
+    const existsInCart = this.cart.some(product => this.cart.exists(product))
+    const isSameOrder = order.quantity > 0 && order.color !== ''
+
+    function combineSameProducts(product) {
+      function appendOrderToProduct(order) {
+        product.quantity = Number.parseInt(product.quantity) + Number.parseInt(order.quantity)
+      }
+      return this.cart.exists(product) ? appendOrderToProduct(order) : product
+    }
+
+    if (isSameOrder) {
+      this.cart = existsInCart ? this.cart.map(combineSameProducts) : this.cart = [...cart, order]
+    }
+  }
+
+  updateOrder(index, data) {
+    this.cart[index] = data;
+  }
+
+  write(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart))
+  }
 }
+module.exports = Cart
