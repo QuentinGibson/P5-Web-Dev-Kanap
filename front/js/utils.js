@@ -1,5 +1,5 @@
-const url = new URL(document.URL)
-const apiUrl = 'https://' + url.hostname.replace('5500', '3000')
+// const url = new URL(document.URL)
+// const apiUrl = 'https://' + url.host_id.replace('5500', '3000')
 
 class Cart {
   constructor(cart) {
@@ -21,9 +21,9 @@ class Cart {
   }
   exists(product) {
     this.cart.some(element => {
-      const { _color, _id } = element
-      const { color, id } = product
-      return (_color === color && id === _id)
+      const { color, _id: id } = element
+      const { color: _color, _id } = product
+      return (color === _color && id === _id)
     });
   }
 
@@ -45,7 +45,7 @@ class Cart {
     }
   }
 
-  updateOrder(index, data) {
+  updateProduct(index, data) {
     this.cart[index] = data;
   }
 
