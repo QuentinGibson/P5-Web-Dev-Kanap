@@ -28,6 +28,12 @@ function index() {
     })
   }
   function digestProduct(product) {
+    appendImage()
+    appendName()
+    appendPrice()
+    appendDescription()
+    appendColors()
+
     function appendImage() {
       const img_container = document.getElementsByClassName("item__img")[0]
       const img = document.createElement('img')
@@ -56,10 +62,5 @@ function index() {
       })
       options.forEach(option => selectInput.appendChild(option))
     }
-    appendImage()
-    appendName()
-    appendPrice()
-    appendDescription()
-    appendColors()
   }
 }
