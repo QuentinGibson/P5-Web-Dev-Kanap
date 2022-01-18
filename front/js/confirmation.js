@@ -1,4 +1,6 @@
-//TODO: Comment these functions and any other functions
+const orderId = getOrderId()
+appendOrderId(orderId)
+
 function getOrderId() {
   const orderIdElement = document.getElementById('orderId')
   const url = new URL(document.location.href)
@@ -8,5 +10,3 @@ function appendOrderId(orderId) {
   orderIdElement.innerHTML = orderId
 }
 
-const orderId = getOrderId()
-appendOrderId(orderId)
