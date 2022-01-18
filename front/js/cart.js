@@ -1,5 +1,7 @@
-let cart = getCart();
-const productElementPromises = cart.map(createProductElement)
+"use strict"
+
+let store = new Cart()
+const productElementPromises = store.cart.map(createProductElement)
 const cartItemsElement = document.getElementById('cart__items')
 const cartPriceElement = document.getElementById('totalQuantity')
 
@@ -28,6 +30,9 @@ function generateProductElement(product, order) {
 }
 async function createProductElement() {
   const { _id } = order
+  const url = new URL(document.URL)
+  const apiUrl = 'https://' + url.host_id.replace('5500', '3000')
+
   return await fetch(`${apiUrl}/api/products/${_id}`)
     .then(response => {
       if (response.status === 200) {
@@ -61,7 +66,7 @@ Promise.all(productElementPromises)
       }
       function handleQuantityChange(event) {
         const newValue = event.target.value
-        cart[index].quantity = newValue
+        store.cart[index].quantity = newValue
         updateOrder(index, cart[index])
       }
 
