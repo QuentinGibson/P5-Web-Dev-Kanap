@@ -59,4 +59,12 @@ class Cart {
     localStorage.setItem("cart", JSON.stringify(cart))
   }
 }
-module.exports = Cart
+
+function getOrderId() {
+  const url = new URL(document.location.href)
+  return url.searchParams.get('id')
+}
+export {
+  Cart,
+  getOrderId
+}
