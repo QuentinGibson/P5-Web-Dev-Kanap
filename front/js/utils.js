@@ -1,6 +1,8 @@
 // const url = new URL(document.URL)
 // const apiUrl = 'https://' + url.host_id.replace('5500', '3000')
 
+const { createTestScheduler } = require("jest")
+
 class Cart {
   constructor(cart) {
     if (cart) {
@@ -19,30 +21,52 @@ class Cart {
   deleteProduct(_index) {
     this.cart = this.cart.filter((_product, index) => index !== _index)
   }
-  exists(product) {
-    this.cart.some(element => {
-      const { color, _id: id } = element
-      const { color: _color, _id } = product
-      return (color === _color && id === _id)
-    });
-  }
-
-  addProduct(order) {
-    const isValidOrder = order.quantity > 0 && order.color !== ''
-    function combineSameProducts(product) {
-      function appendOrderToProduct(order) {
-        product.quantity = Number.parseInt(product.quantity) + Number.parseInt(order.quantity)
+  addProduct(newProduct) {
+    const isValidOrder = newProduct.quantity > 0 && newProduct.color !== ''
+    const findIndex = (item) => {
+      const { color, _id } = item
+      for (let i in this.cart) {
+        const product = this.cart[i]
+        const { color: pcolor, _id: pid } = product
+        if (color === pcolor && _id === pid) {
+          return i
+        }
       }
-      return this.exists(product) ? appendOrderToProduct(order) : product
+      return -1
     }
+    const isExisting = findIndex(newProduct) !== -1
 
     if (isValidOrder) {
-      if (this.exists(order)) {
-        this.cart.map(combineSameProducts)
+      if (isExisting) {
+        this.cart = this.cart.map(handleExisting)
+        function handleExisting(product, index) {
+          if (index === findIndex(newProduct)) {
+            const copy = Object.assign({}, product)
+            copy.quantity += newProduct.quantity
+            return copy
+          }
+          return product
+        }
       } else {
-        this.cart = [...this.cart, order]
+        this.cart = [...this.cart, newProduct]
       }
     }
+
+    function combineSameProduct(product, productIndex, copy) {
+      let newProduct
+      if (findIndex(copy) === productIndex) {
+        newProduct = appendProduct(product, copy)
+      } else {
+        newProduct = copy
+      }
+      return newProduct
+
+      function appendProduct(product, copy) {
+        product.quantity = Number.parseInt(product.quantity) + Number.parseInt(copy.quantity)
+        return product
+      }
+    }
+
   }
 
   updateProduct(index, data) {

@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/QuentinGibson/P5-Web-Dev-Kanap/issues"
   },
-  "homepage": "https://github.com/QuentinGibson/P5-Web-Dev-Kanap#readme"
+  "homepage": "https://github.com/QuentinGibson/P5-Web-Dev-Kanap#readme",
+  "devDependencies": {
+    "jest": "^27.4.7"
+  }
 }
