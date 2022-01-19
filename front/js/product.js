@@ -16,13 +16,12 @@ function index() {
     .then(product => digestProduct(product))
     .catch("There was an unknown issue while getting the products. Please check the server and try again!")
 
-
   function attachEventToButton() {
     const cartElement = document.getElementById('addToCart');
     cartElement.addEventListener('click', function () {
       const product = {
         "color": document.getElementById("colors").value,
-        "quantity": document.getElementById("quantity").value,
+        "quantity": Number.parseInt(document.getElementById("quantity").value),
         "_id": currentId
       }
       store.addProduct(product)
