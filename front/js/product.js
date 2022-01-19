@@ -20,13 +20,12 @@ function index() {
   function attachEventToButton() {
     const cartElement = document.getElementById('addToCart');
     cartElement.addEventListener('click', function () {
-      const order = {
+      const product = {
         "color": document.getElementById("colors").value,
         "quantity": document.getElementById("quantity").value,
         "_id": currentId
       }
-      store.addProduct(order)
-      store.write()
+      store.addProduct(product)
     })
   }
   function digestProduct(product) {
