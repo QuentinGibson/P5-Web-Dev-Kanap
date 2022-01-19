@@ -29,6 +29,12 @@ describe("localStorage: cart", () => {
       store.addProduct({ _id: "onion rings", quantity: 1, color: "brown" })
       expect(store.cart).toEqual(expectedResult)
     })
+    test("by ignoring products with no quanitity or color", () => {
+      const expectedResult = [{ _id: "fries", quantity: 1, color: 'yellow' }, { _id: "burger", quantity: 1, color: "brown" }, { _id: "shake", quantity: 2, color: "pink" }]
+      store.addProduct({ _id: "onion rings", quantity: 1, color: "" })
+      store.addProduct({ _id: "fries", quantity: 0, color: "yellow" })
+      expect(store.cart).toEqual(expectedResult)
+    })
     test("by adding products to the end of list the same id but differnt color", () => {
       const expectedResult = [{ _id: "fries", quantity: 1, color: 'yellow' }, { _id: "burger", quantity: 1, color: "brown" }, { _id: "shake", quantity: 2, color: "pink" }, { _id: "burger", quantity: 1, color: "yellow/brown" }]
       store.addProduct({ _id: "burger", quantity: 1, color: "yellow/brown" })
