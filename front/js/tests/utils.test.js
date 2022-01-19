@@ -1,4 +1,4 @@
-const { Cart } = require('../dist/utils.js')
+const { Cart } = require('../utils.js')
 
 describe("localStorage: cart", () => {
   let store
