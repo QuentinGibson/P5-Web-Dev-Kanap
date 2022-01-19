@@ -1,70 +1,54 @@
 class Cart {
   constructor(cart) {
     if (cart) {
-      this.cart = cart
+      this.cart = cart;
     } else {
-      this.cart = this.getCart()
+      this.cart = this.getCart();
     }
   }
   getCart() {
-    const data = localStorage.getItem("cart")
+    const data = localStorage.getItem("cart");
     if (data === '' || data === null || data === undefined) {
-      return []
+      return [];
     }
-    return JSON.parse(data)
+    return JSON.parse(data);
   }
   deleteProduct(_index) {
-    this.cart = this.cart.filter((_product, index) => index !== _index)
+    this.cart = this.cart.filter((_product, index) => index !== _index);
+    this.write(this.cart)
   }
   addProduct(newProduct) {
-    findIndex = findIndex.bind(this)
-
-    const isValidOrder = newProduct.quantity > 0 && newProduct.color !== ''
-    const isExisting = findIndex(newProduct) !== -1
-    if (isValidOrder) {
-      if (isExisting) {
-        this.cart = this.cart.map(handleExisting)
-        return product
-      }
+    if (indexOf(this.cart, newProduct) !== -1) {
+      this.cart[indexOf(this.cart, newProduct)].quantity += newProduct.quantity
     } else {
       this.cart = [...this.cart, newProduct]
     }
 
-    function handleExisting(product, index) {
-      if (index === findIndex(newProduct)) {
-        const copy = Object.assign({}, product)
-        copy.quantity += newProduct.quantity
-        return copy
-      }
-    }
-    function findIndex(item) {
-      const { color, _id } = item
-      for (let i in this.cart) {
-        const product = this.cart[i]
-        const { color: pcolor, _id: pid } = product
-        const identical = color === pcolor && _id === pid
-        if (identical) {
+    function indexOf(cart, newProduct) {
+      for (let i = 0; i < cart.length; i++) {
+        const product = cart[i]
+        const { _id, color } = product
+        if (_id === newProduct._id && color === newProduct.color) {
           return Number.parseInt(i)
         }
       }
       return -1
     }
+    this.write(this.cart)
   }
 
   updateProduct(index, data) {
     this.cart[index] = data;
+    this.write(this.cart)
   }
 
   write(cart) {
-    localStorage.setItem("cart", JSON.stringify(cart))
+    localStorage.setItem("cart", JSON.stringify(cart));
   }
 }
 
 function getOrderId() {
-  const url = new URL(document.location.href)
-  return url.searchParams.get('id')
+  const url = new URL(document.location.href);
+  return url.searchParams.get('id');
 }
-export {
-  Cart,
-  getOrderId
-}
+export { Cart, getOrderId };
