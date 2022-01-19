@@ -13,10 +13,17 @@ const emailErrorMsgElement = document.getElementById('emailErrorMsg')
 
 const formValidity = document.querySelector('form').checkValidity();
 
+customInvalid(firstName, firstNameErrorMsgElement, `<p>Please enter a valid first name.</p>`)
+customInvalid(lastName, lastNameErrorMsgElement, `<p>Please enter a valid last name.</p>`)
+customInvalid(address, addressErrorMsgElement, `<p>Please enter a valid address.</p>`)
+customInvalid(city, cityErrorMsgElement, `<p>Please enter a valid city.</p>`)
+customInvalid(email, emailErrorMsgElement, `<p>Please enter a valid email.</p>`)
+form.addEventListener('submit', handleSubmit)
+
 function handleSubmit(event) {
   event.preventDefault()
-  const cart = getCart()
-  const productTable = cart.map(({ _id }) => _id)
+  const store = new Cart()
+  const productTable = store.cart.map(({ _id }) => _id)
   const contact = {
     firstName: firstName.value,
     lastName: lastName.value,
@@ -24,6 +31,12 @@ function handleSubmit(event) {
     city: city.value,
     email: email.value
   }
+
+  saveContact(contact)
+  saveProductTable(productTable)
+  sendPOST(contact, productTable)
+  return false;
+
   function saveContact(contact) {
     const contactString = JSON.stringify(contact)
     localStorage.setItem("contact", contactString)
@@ -59,10 +72,6 @@ function handleSubmit(event) {
         console.log(`Error: ${err}`)
       })
   }
-  saveContact(contact)
-  saveProductTable(productTable)
-  sendPOST(contact, productTable)
-  return false;
 }
 function customInvalid(input, errorElement, message) {
   input.addEventListener('invalid', (event) => {
@@ -70,10 +79,3 @@ function customInvalid(input, errorElement, message) {
     errorElement.innerHTML = message
   })
 }
-customInvalid(firstName, firstNameErrorMsgElement, `<p>Please enter a valid first name.</p>`)
-customInvalid(lastName, lastNameErrorMsgElement, `<p>Please enter a valid last name.</p>`)
-customInvalid(address, addressErrorMsgElement, `<p>Please enter a valid address.</p>`)
-customInvalid(city, cityErrorMsgElement, `<p>Please enter a valid city.</p>`)
-customInvalid(email, emailErrorMsgElement, `<p>Please enter a valid email.</p>`)
-
-form.addEventListener('submit', handleSubmit)
