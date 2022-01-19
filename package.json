@@ -17,9 +17,19 @@
   },
   "homepage": "https://github.com/QuentinGibson/P5-Web-Dev-Kanap#readme",
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.16.8",
     "jest": "^27.4.7"
   },
   "dependencies": {
     "lodash.isequal": "^4.5.0"
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "plugins": [
+          "@babel/plugin-transform-modules-commonjs"
+        ]
+      }
+    }
   }
 }

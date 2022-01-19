@@ -1,5 +1,6 @@
 "use strict"
 
+import { Cart } from './utils'
 document.addEventListener("DOMContentLoaded", index)
 
 function index() {
@@ -7,6 +8,7 @@ function index() {
   const apiUrl = 'https://' + url.host_id.replace('5500', '3000')
   const searchParams = new URLSearchParams(url.search)
   const currentId = searchParams.get('id')
+  const store = new Cart()
 
   attachEventToButton()
   fetch(`${apiUrl}/api/products/${currentId}`)
