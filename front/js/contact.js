@@ -1,3 +1,5 @@
+import { customInvalid, saveContact, saveProductTable, sendPOST } from './lib'
+
 const form = document.querySelector('form')
 const firstName = document.getElementById('firstName')
 const lastName = document.getElementById('lastName')
@@ -10,8 +12,6 @@ const lastNameErrorMsgElement = document.getElementById('lastNameErrorMsg')
 const addressErrorMsgElement = document.getElementById('addressErrorMsg')
 const cityErrorMsgElement = document.getElementById('cityErrorMsg')
 const emailErrorMsgElement = document.getElementById('emailErrorMsg')
-
-const formValidity = document.querySelector('form').checkValidity();
 
 customInvalid(firstName, firstNameErrorMsgElement, `<p>Please enter a valid first name.</p>`)
 customInvalid(lastName, lastNameErrorMsgElement, `<p>Please enter a valid last name.</p>`)
@@ -37,45 +37,4 @@ function handleSubmit(event) {
   sendPOST(contact, productTable)
   return false;
 
-  function saveContact(contact) {
-    const contactString = JSON.stringify(contact)
-    localStorage.setItem("contact", contactString)
-  }
-  function saveProductTable(productTable) {
-    const productTableString = JSON.stringify(productTable)
-    localStorage.setItem("productTable", productTableString)
-  }
-  async function sendPOST(contact, products) {
-    await fetch(`${apiUrl}/api/products/order`, {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        contact: contact,
-        products: products
-      })
-    })
-      .then(response => {
-        if (response.status === 201) {
-          response.json()
-            .then(json => {
-              window.location.replace(`confirmation.html?id=${json.orderId}`);
-            })
-        } else {
-          console.log(response.status)
-        }
-      })
-      .catch(err => {
-        console.log('There was an issue with the POST request')
-        console.log(`Error: ${err}`)
-      })
-  }
-}
-function customInvalid(input, errorElement, message) {
-  input.addEventListener('invalid', (event) => {
-    event.preventDefault()
-    errorElement.innerHTML = message
-  })
 }
