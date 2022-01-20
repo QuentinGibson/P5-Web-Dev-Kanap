@@ -20,32 +20,50 @@ export function generateProduct(product) {
   appendColors()
 
   function appendImage() {
-    const img_container = document.getElementsByClassName("item__img")[0]
-    const img = document.createElement('img')
-    img.src = `${product.imageUrl}`
-    img.alt = `${product.altTxt}`
-    if (img_container !== undefined) {
+    try {
+      const img_container = document.getElementsByClassName("item__img")[0]
+      const img = document.createElement('img')
+      img.src = `${product.imageUrl}`
+      img.alt = `${product.altTxt}`
       img_container.appendChild(img)
+    } catch (e) {
+      console.error(`Could not add element: ${e}`)
     }
   }
   function appendName() {
-    const name_container = document.getElementById('title')
-    const name = document.createElement('h1')
-    name.innerHTML = `${product.name}`
-    if (name_container !== undefined) {
-      name_container.append(name)
+    try {
+      const name_container = document.getElementById('title')
+      const name = document.createElement('h1')
+      name.innerHTML = `${product.name}`
+      if (name_container !== undefined) {
+        name_container.append(name)
+      }
+    } catch (e) {
+      console.error(`Could not add element: ${e}`)
     }
   }
+
   function appendPrice() {
-    const price = document.getElementById('price')
-    if (price !== undefined) {
-      price.innerHTML = `${product.price}`
+    try {
+      const price = document.getElementById('price')
+      if (price !== undefined) {
+        price.innerHTML = `${product.price}`
+      }
+
+    } catch (e) {
+      console.error(`Could not add element: ${e}`)
     }
   }
+
   function appendDescription() {
-    const description = document.getElementById('description')
-    if (description !== undefined) {
-      description.innerHTML = `${product.description}`
+    try {
+      const description = document.getElementById('description')
+      if (description !== undefined) {
+        description.innerHTML = `${product.description}`
+      }
+
+    } catch (e) {
+      console.error(`Could not add element ${e}`)
     }
   }
   function appendColors() {
@@ -57,6 +75,7 @@ export function generateProduct(product) {
       options.forEach(option => selectInput.appendChild(option))
     }
   }
+
 }
 
 export function saveContact(contact) {
@@ -161,5 +180,6 @@ export function appendFragToDocument(element, index) {
   const frag = document.createRange().createContextualFragment(element)
   frag.querySelector('.itemQuantity').addEventListener('change', handleQuantityChange)
   frag.querySelector('.deleteItem').addEventListener('click', handleDeleteButtonClick)
+  const cartItemsElement = document.getElementById('cart__items')
   cartItemsElement.appendChild(frag)
 }

@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "babel front/js/ -d ./front/js/dist --ignore front/js/tests"
+    "build": "babel front/js/ -d ./front/js/dist --ignore front/js/tests",
+    "clean": "rm -rf ./front/js/dist",
+    "rebuild": "npm run clean && npm run build",
+    "dev": "npm run rebuild && npm run test",
+    "watch": "watch 'npm run dev' ./front/js/src ./front/js/tests"
   },
   "repository": {
     "type": "git",
@@ -20,7 +24,8 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.16.8",
     "babel-cli": "^6.26.0",
-    "jest": "^27.4.7"
+    "jest": "^27.4.7",
+    "watch": "^1.0.2"
   },
   "dependencies": {
     "lodash.isequal": "^4.5.0"

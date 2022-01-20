@@ -1,4 +1,5 @@
-import {getOrderId} from 'utils'
+import {getOrderId} from './utils'
+
 const orderId = getOrderId()
 appendOrderId(orderId)
 

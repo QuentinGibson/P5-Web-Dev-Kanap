@@ -3,8 +3,6 @@ import { appendFragToDocument, createProductElement } from "./lib"
 
 const store = new Cart()
 const productElementPromises = store.cart.map(createProductElement)
-const cartItemsElement = document.getElementById('cart__items')
-const cartPriceElement = document.getElementById('totalQuantity')
 
 Promise.all(productElementPromises)
   .then(response => {
