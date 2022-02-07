@@ -5,11 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "babel front/js/ -d ./front/js/dist --ignore front/js/tests",
-    "clean": "rm -rf ./front/js/dist",
-    "rebuild": "npm run clean && npm run build",
-    "dev": "npm run rebuild && npm run test",
-    "watch": "watch 'npm run dev' ./front/js/src ./front/js/tests"
+    "watch": "tsc --project --watch ./tsconfig.json",
+    "build": "tsc --project ./tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -22,21 +19,8 @@
   },
   "homepage": "https://github.com/QuentinGibson/P5-Web-Dev-Kanap#readme",
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.16.8",
-    "babel-cli": "^6.26.0",
     "jest": "^27.4.7",
+    "typescript": "^4.5.5",
     "watch": "^1.0.2"
-  },
-  "dependencies": {
-    "lodash.isequal": "^4.5.0"
-  },
-  "babel": {
-    "env": {
-      "test": {
-        "plugins": [
-          "@babel/plugin-transform-modules-commonjs"
-        ]
-      }
-    }
   }
 }
