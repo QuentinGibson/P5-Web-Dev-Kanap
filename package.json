@@ -2,7 +2,7 @@
   "name": "p5-web-dev-kanap",
   "version": "1.0.0",
   "description": "This is the front end and back end server for Project 5 of the Web Developer path.",
-  "main": "index.js",
+  "main": "front/js/src/index.js",
   "scripts": {
     "test": "jest",
     "watch": "tsc --project --watch ./tsconfig.json",
