@@ -1,18 +1,45 @@
-import { describe, test, beforeEach, expect } from "@jest/globals";
-import { Cart } from "../src/index";
-
-describe("localStorage: cart", () => {
+import { Cart, Product } from "../src/productTable";
+const products: Product[] = [
+  {
+    colors: ["Blue", "White", "Black"],
+    _id: "107fb5b75607497b96722bda5b504926",
+    name: "Kanap Sinopé",
+    price: 1849,
+    imageUrl: "kanap01.jpeg",
+    description:
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    altTxt: "Photo of a blue sofa, two seats",
+  },
+  {
+    colors: ["Black/Yellow", "Black/Red"],
+    _id: "415b7cacb65d43b2b5c1ff70f3393ad1",
+    name: "Kanap Cyllène",
+    price: 4499,
+    imageUrl: "kanap02.jpeg",
+    description:
+      "Morbi nec erat aliquam, sagittis urna non, laoreet justo. Etiam sit amet interdum diam, at accumsan lectus.",
+    altTxt: "Photo of a yellow and black sofa, four seats",
+  },
+];
+test("should be construced", () => {
+  expect(new Cart()).toBeInstanceOf(Cart);
+});
+test("Object structure", () => {
+  expect(new Cart()).toEqual(
+    expect.objectContaining({
+      cart: expect.any(Array),
+      find: expect.any(Function),
+      update: expect.any(Function),
+      remove: expect.any(Function),
+      all: expect.any(Function),
+      get: expect.any(Function),
+    })
+  );
+});
+describe("Product Table:", () => {
   let store;
   beforeEach(() => {
-    store = new Cart([
-      { _id: "fries", quantity: 1, color: "yellow" },
-      { _id: "burger", quantity: 1, color: "brown" },
-      { _id: "shake", quantity: 2, color: "pink" },
-    ]);
-  });
-  test("should read cart", () => {
-    const newStore = new Cart();
-    expect(newStore.cart).toBeTruthy();
+    store = new Cart([products[0], products[1]]);
   });
   test("should remove product", () => {
     const expectedResult = [
