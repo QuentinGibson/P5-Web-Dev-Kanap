@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "sourceMap": true,
-    "types": ["@types/jest"]
-  },
-  "include": ["front/js/src/**/*.ts", "front/js/tests/**/*.ts"]
-}
