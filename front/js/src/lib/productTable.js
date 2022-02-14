@@ -1,7 +1,8 @@
-export class ProductTable {
+class ProductTable {
   table;
-  constructor(items = []) {
-    this.table = [...items];
+  constructor(productTable) {
+    this.productTable = productTable;
+    window.localStorage.getItem("productTable");
   }
 
   find({ _id: inputId, color: inputColor }) {
@@ -36,3 +37,5 @@ export class ProductTable {
     this.table[index] = product;
   }
 }
+
+export const productTable = new ProductTable();

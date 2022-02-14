@@ -1,6 +1,11 @@
 import { fetchProducts } from "./fetchProducts";
 import { createProductElement } from "./createProductElement.js";
 
+document.addEventListener("load", () => {
+  fetchProducts()
+    .then((products) => handleProducts(products))
+    .catch((error) => handleError(error));
+});
 export const handleProducts = (products) => {
   const container = document.getElementById("items");
   if (products) {
@@ -19,11 +24,4 @@ export const handleError = (error) => {
     "beforeend",
     `<h3 id="errormsg">Sorry there was a problem fetching the couches</h3>`
   );
-  console.log(error);
 };
-
-document.addEventListener("load", () => {
-  fetchProducts()
-    .then((products) => handleProducts(products))
-    .catch((error) => handleError(error));
-});

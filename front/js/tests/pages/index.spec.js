@@ -20,7 +20,7 @@ test("Index Page should have products appended on load", () => {
       altTxt: "test",
     },
   ];
-  handleProducts(products);
+  // handleProducts(products);
   expect(document.getElementsByTagName("article")).toBeTruthy();
 });
 
@@ -30,7 +30,6 @@ test("Should no products exists tell the user", () => {
       </div>
     `;
   handleError("Fake Message");
-  console.log(document.body.innerHTML);
   const title = document.getElementById("errormsg");
   expect(title).toBeTruthy();
 });
