@@ -1,4 +1,31 @@
 export function handleproductImage(imageElement) {
   const imageContainer = document.getElementsByClassName("item__img")[0];
-  imageContainer.insertAdjacentHTML("beforeend", imageElement);
+  if (imageContainer) {
+    imageContainer.insertAdjacentHTML("beforeend", imageElement);
+  }
+}
+
+export function handleProductName(name) {
+  const nameElement = document.getElementById("title");
+  if (nameElement) {
+    nameElement.insertAdjacentText("beforebegin", name);
+  }
+}
+
+export function handleProductPrice(price) {
+  const priceElement = document.getElementById("price");
+  if (priceElement) {
+    priceElement.insertAdjacentText("beforebegin", price);
+  }
+}
+export function handleProductDescription(description) {
+  const descriptionElement = document.getElementById("description");
+  if (descriptionElement) {
+    descriptionElement.innerHTML = description;
+  }
+}
+
+export function handleColors(colorElementArray) {
+  const selector = document.getElementById("colors");
+  selector.insertAdjacentHTML("beforebegin", colorElementArray);
 }

@@ -2,7 +2,13 @@
  * @jest-environment jsdom
  */
 import { createImageElement } from "../../src/generators/createImageElement";
-import { handleproductImage } from "../../src/lib/product";
+import { createProductColorElement } from "../../src/generators/createProductColorElement";
+import {
+  handleproductImage,
+  handleProductName,
+  handleProductDescription,
+  handleColors,
+} from "../../src/lib/product";
 
 describe("product page", () => {
   beforeAll(() => {
@@ -41,19 +47,37 @@ describe("product page", () => {
     `;
   });
   describe("on load", () => {
-    test("product image added", () => {
+    test("product image", () => {
       const image = createImageElement("testUrl", "test");
       handleproductImage(image);
       const img = document.getElementsByTagName("img")[0];
       expect(img).toBeTruthy();
     });
-    test("product name added", () => {
+    test("product name", () => {
+      handleProductName("test");
       const name = document.getElementById("title");
-      const length = name.length;
+      const length = name.innerHTML.length;
       expect(length).toBeGreaterThanOrEqual(1);
     });
-    test("product price on load", () => {
+    test("product price", () => {
       const price = document.getElementById("price");
+      const length = price.innerHTML.length;
+      expect(length).toBeGreaterThanOrEqual(1);
+    });
+    test("product description", () => {
+      handleProductDescription("test");
+      const description = document.getElementById("description");
+      const length = description.innerHTML.trim().length;
+      expect(length).toBeGreaterThanOrEqual(1);
+    });
+    test("product colors", () => {
+      const colors = ["Blue", "Black", "Purple", "Orange"];
+      const productElementArray = colors.map((color) =>
+        createProductColorElement(color)
+      );
+      handleColors(productElementArray);
+      const optionElements = document.getElementsByTagName("option");
+      expect(optionElements.length).toBeGreaterThanOrEqual(2);
     });
   });
 });
