@@ -1,4 +1,4 @@
-export async function fetchProducts(id) {
+export default async function fetchProducts(id) {
   const url = "https://localhost:3000/api/products/";
   return id
     ? await fetch(url + id).then((data) => data.json())

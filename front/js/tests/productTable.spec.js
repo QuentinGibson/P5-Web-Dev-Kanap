@@ -1,4 +1,7 @@
-import { ProductTable, Product } from "../src/productTable";
+/**
+ * @jest-environment jsdom
+ */
+import ProductTable from "../src/lib/productTable";
 
 const products = [
   {
@@ -34,7 +37,7 @@ describe("Product Table: ", () => {
     expect(table.get(products[0]._id)).toEqual(products[0]);
   });
   test("should remove product from cart by id", () => {
-    table.remove(products[0]._id);
+    table.remove(0);
     const expected = [products[1]];
     expect(table.table).toEqual(expected);
   });
@@ -68,8 +71,7 @@ describe("Product Table: ", () => {
     const adjustedProduct = { ...products[1] };
     adjustedProduct.color = "Purple";
     const expected = [products[0], adjustedProduct];
-    const { _id, color } = products[1];
-    table.update({ _id, color }, adjustedProduct);
+    table.update(1, adjustedProduct);
 
     expect(table.table).toEqual(expected);
   });

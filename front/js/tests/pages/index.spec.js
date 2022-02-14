@@ -1,11 +1,9 @@
 /**
  * @jest-environment jsdom
  */
-import { handleProducts, handleError } from "../../src/index";
+import handleError from "../../src/lib/index/handleError";
+import handleProducts from "../../src/lib/index/handleProducts";
 
-test("Should throw if no products are passed", () => {
-  expect(handleProducts).toThrow("Pass in products to handleProducts");
-});
 test("Index Page should have products appended on load", () => {
   document.body.innerHTML = `
       <div id="items">

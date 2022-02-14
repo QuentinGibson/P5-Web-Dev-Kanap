@@ -1,8 +1,13 @@
-class ProductTable {
-  table;
+export default class ProductTable {
   constructor(productTable) {
-    this.productTable = productTable;
-    window.localStorage.getItem("productTable");
+    if (productTable) {
+      this.table = productTable;
+      this.save(productTable);
+    } else if (!productTable && window.localStorage.getItem("productTable")) {
+      this.table = JSON.parse(window.localStorage.getItem("productTable"));
+    } else {
+      this.table = [];
+    }
   }
 
   find({ _id: inputId, color: inputColor }) {
@@ -17,8 +22,10 @@ class ProductTable {
     const index = this.table.map((product) => product._id).indexOf(id);
     return this.table[index];
   }
-  remove(id) {
-    this.table = this.table.filter((product) => product._id !== id);
+  remove(index) {
+    this.table = this.table.filter(
+      (_product, productIndex) => index !== productIndex
+    );
   }
   all() {
     return this.table;
@@ -32,10 +39,15 @@ class ProductTable {
       this.table.push(product);
     }
   }
-  update({ _id, color }, product) {
-    const index = this.find({ _id, color });
+  update(index, product) {
     this.table[index] = product;
+    this.save(this.table);
+  }
+  fetch() {
+    this.table = JSON.parse(localStorage.getItem("productTable"));
+  }
+  save(table) {
+    const rawString = JSON.stringify(table);
+    localStorage.setItem("productTable", rawString);
   }
 }
-
-export const productTable = new ProductTable();
