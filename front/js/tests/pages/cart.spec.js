@@ -6,7 +6,6 @@ import handleLoad from "../../src/lib/handleLoad";
 import handleChange from "../../src/lib/cart/handleChange";
 import handleDeleteButton from "../../src/lib/handleDeleteButton";
 import ProductTable from "../../src/lib/productTable";
-import handleSubmit from "../../src/lib/cart/handleSubmit";
 describe("cart page:", () => {
   describe("products", () => {
     beforeAll(() => {
@@ -59,12 +58,6 @@ describe("cart page:", () => {
         displayError(element_id, message);
         const content = document.getElementById("firstNameErrorMsg").innerHTML;
         expect(content.length).toBeGreaterThan(0);
-      });
-    });
-    describe("submission", () => {
-      test("should save number into localStorage", () => {
-        handleSubmit();
-        expect(window.localStorage.getItem("number")).toBeTruthy();
       });
     });
   });
