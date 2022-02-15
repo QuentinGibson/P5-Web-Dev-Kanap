@@ -1,8 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import handleError from "../../src/lib/index/handleError";
-import handleProducts from "../../src/lib/index/handleProducts";
+import { handleProducts, handleError } from "../../src/lib/home";
 
 test("Index Page should have products appended on load", () => {
   document.body.innerHTML = `
@@ -18,7 +17,7 @@ test("Index Page should have products appended on load", () => {
       altTxt: "test",
     },
   ];
-  // handleProducts(products);
+  handleProducts(products);
   expect(document.getElementsByTagName("article")).toBeTruthy();
 });
 

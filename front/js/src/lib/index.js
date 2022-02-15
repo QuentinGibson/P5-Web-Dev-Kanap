@@ -1,7 +1,15 @@
 import createCartElement from "../generators/createCartElement";
-import handleChange from "../lib/cart/handleChange";
-import handleDeleteButton from "./handleDeleteButton";
-export default function handleLoad(productTable) {
+import handleChange from "./cart/";
+import handleDeleteButton from "./cart";
+
+export async function fetchProducts(id) {
+  const url = "https://localhost:3000/api/products/";
+  return id
+    ? await fetch(url + id).then((data) => data.json())
+    : await fetch(url).then((data) => data.json());
+}
+
+export function handleLoad(productTable) {
   if (productTable) {
     const container = document.getElementById("cart__items");
     for (let index in productTable) {

@@ -1,10 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-import displayError from "../../src/lib/cart/displayError";
-import handleLoad from "../../src/lib/handleLoad";
-import handleChange from "../../src/lib/cart/handleChange";
-import handleDeleteButton from "../../src/lib/handleDeleteButton";
+import { handleLoad, handleError } from "../../src/lib";
+import {
+  handleChange,
+  displayError,
+  handleDeleteButton,
+} from "../../src/lib/cart";
 import ProductTable from "../../src/lib/productTable";
 describe("cart page:", () => {
   describe("products", () => {
