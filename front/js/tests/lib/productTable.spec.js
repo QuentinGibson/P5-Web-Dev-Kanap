@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import ProductTable from "../src/lib/productTable";
+import ProductTable from "../../src/lib/productTable";
 
 const products = [
   {

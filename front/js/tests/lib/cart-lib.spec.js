@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { handleLoad, handleError } from "../../src/lib";
+import { handleLoad } from "../../src/lib";
 import {
   handleChange,
   displayError,
