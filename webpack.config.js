@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    index: path.resolve(__dirname, "front/js/src/index.js"),
+    index: path.resolve(__dirname, "front/js/src/home.js"),
     cart: path.resolve(__dirname, "front/js/src/cart.js"),
     product: path.resolve(__dirname, "front/js/src/product.js"),
   },

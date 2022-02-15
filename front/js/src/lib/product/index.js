@@ -1,4 +1,6 @@
-export function handleproductImage(imageElement) {
+import ProductTable from "../productTable";
+
+export function handleProductImage(imageElement) {
   const imageContainer = document.getElementsByClassName("item__img")[0];
   if (imageContainer) {
     imageContainer.insertAdjacentHTML("beforeend", imageElement);
@@ -28,4 +30,21 @@ export function handleProductDescription(description) {
 export function handleColors(colorElementArray) {
   const selector = document.getElementById("colors");
   selector.insertAdjacentHTML("beforebegin", colorElementArray);
+}
+
+export function handleCartButtonClick() {
+  const params = new URLSearchParams(document.location.search);
+  const id = params.get("id");
+  const button = document.getElementById("addToCart");
+  button.addEventListener("click", () => {
+    const quantity = document.getElementById("quantity").value;
+    const color = document.getElementById("colors").value;
+    const product = Object.assign(
+      {},
+      { quantity, color },
+      productTable.get(id)
+    );
+    const productTable = new ProductTable();
+    productTable.write(product);
+  });
 }

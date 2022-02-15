@@ -5,7 +5,8 @@
   "main": "front/js/src/index.js",
   "scripts": {
     "test": "jest",
-    "watch": "jest --watch "
+    "watch": "jest --watch ",
+    "build": "webpack-cli"
   },
   "repository": {
     "type": "git",

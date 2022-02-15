@@ -1,6 +1,6 @@
 import createCartElement from "../generators/createCartElement";
-import handleChange from "./cart/";
-import handleDeleteButton from "./cart";
+import { handleChange } from "./cart/";
+import { handleDeleteButton } from "./cart";
 
 export async function fetchProducts(id) {
   const url = "https://localhost:3000/api/products/";

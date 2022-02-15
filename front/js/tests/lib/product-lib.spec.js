@@ -4,7 +4,7 @@
 import { createImageElement } from "../../src/generators/createImageElement";
 import { createProductColorElement } from "../../src/generators/createProductColorElement";
 import {
-  handleproductImage,
+  handleProductImage,
   handleProductName,
   handleProductDescription,
   handleColors,
@@ -49,7 +49,7 @@ describe("product page", () => {
   describe("on load", () => {
     test("product image", () => {
       const image = createImageElement("testUrl", "test");
-      handleproductImage(image);
+      handleProductImage(image);
       const img = document.getElementsByTagName("img")[0];
       expect(img).toBeTruthy();
     });
