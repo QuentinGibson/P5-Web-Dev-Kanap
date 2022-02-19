@@ -48,16 +48,11 @@ export function addEventListenersForCart(
 }
 
 export function getTotalQuantitiy(productTable) {
-  const returnValue = productTable.table.reduce((a, b) => {
-    console.log(`a:${JSON.stringify(a)}`);
-    console.log(`b:${JSON.stringify(b)}`);
-    return a + b.quantity;
-  });
-  console.log(`returnValue: ${JSON.stringify(returnValue)}`);
+  const quantityMap = productTable.table.map((product) => product.quantity);
+  return quantityMap.reduce((a, b) => Number(a) + Number(b));
 }
 
 export function getTotalPrice(productTable) {
-  return productTable.table.reduce((a, b) => {
-    return a + b.price;
-  });
+  const quantityMap = productTable.table.map((product) => product.price);
+  return quantityMap.reduce((a, b) => Number(a) + Number(b));
 }
