@@ -23,20 +23,24 @@ export default class ProductTable {
     return this.table[index];
   }
   remove(index) {
-    this.table = this.table.filter(
-      (_product, productIndex) => index !== productIndex
-    );
+    const tableCopy = [...this.table];
+    tableCopy.splice(index, 1);
+    this.save(tableCopy);
   }
   all() {
     return this.table;
   }
   write(product) {
-    const { _id, color } = product;
-    const index = this.find({ _id, color });
-    if (index !== -1) {
-      this.table[index].quantity += product.quantity;
-    } else {
-      this.table.push(product);
+    if (product.quantity || product.color !== "") {
+      const { _id, color } = product;
+      const index = this.find({ _id, color });
+      if (index !== -1) {
+        this.table[index].quantity =
+          Number(product.quantity) + Number(this.table[index].quantity);
+      } else {
+        this.table.push(product);
+      }
+      this.save(this.table);
     }
   }
   update(index, product) {

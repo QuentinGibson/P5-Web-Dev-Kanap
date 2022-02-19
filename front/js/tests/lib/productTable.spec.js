@@ -36,9 +36,10 @@ describe("Product Table: ", () => {
   test("should get one product from the cart", () => {
     expect(table.get(products[0]._id)).toEqual(products[0]);
   });
-  test("should remove product from cart by id", () => {
+  test("should remove product from cart by index", () => {
     table.remove(0);
     const expected = [products[1]];
+    table = new ProductTable();
     expect(table.table).toEqual(expected);
   });
   test("should find product by color and id", () => {

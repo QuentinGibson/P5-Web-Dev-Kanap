@@ -1,10 +1,10 @@
-export function createProductElement(product) {
-  const { id, name, description, imageUrl, altTxt } = product;
+export default function createProductElement(product) {
+  const { _id, name, description, imageUrl, altTxt } = product;
   const anchorTag = document.createElement("a");
-  anchorTag.href = `product.html?id=${id}`;
+  anchorTag.href = `product.html?id=${_id}`;
   const article = document.createElement("article");
   article.innerHTML = `
-      <img href="${imageUrl} alt=${altTxt} />
+      <img src="${imageUrl}" alt="${altTxt}" />
       <h3 class="productName">${name}</h3>
       <p class="productDescription">${description}</p>
   `;

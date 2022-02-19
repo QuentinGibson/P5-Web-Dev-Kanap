@@ -15,7 +15,9 @@ export function startProduct() {
   const id = params.get("id");
   fetchProducts(id).then((product) => {
     const { colors, description, name, price, imageUrl, altTxt } = product;
-    const colorOptions = createProductColorElement(colors);
+    const colorOptions = colors.map((color) =>
+      createProductColorElement(color)
+    );
     const imageElement = createImageElement(imageUrl, altTxt);
     handleColors(colorOptions);
     handleProductDescription(description);
@@ -25,4 +27,4 @@ export function startProduct() {
     handleCartButtonClick();
   });
 }
-windoW.addEventListener("load", startProduct);
+window.addEventListener("load", startProduct);

@@ -34,11 +34,11 @@ describe("cart page:", () => {
     describe("Event Listeners", () => {
       test("event handler for input should update table", () => {
         const productTable = new ProductTable();
-        const event = { target: { value: 30 } };
+        const event = { target: { value: 30, getAttribute: () => 0 } };
         const index = 0;
         let table = productTable.table;
         const product = table[index];
-        handleChange(event, index);
+        handleChange(event, productTable);
         productTable.fetch();
         table = product.table;
         const expected = Object.assign({}, { quantity: 30 }, product);
@@ -46,8 +46,9 @@ describe("cart page:", () => {
       });
 
       test("event handler for delete button should delete element from product table", () => {
-        const index = 0;
-        handleDeleteButton(index);
+        const event = { target: { getAttribute: () => 0, closest: () => 0 } };
+        const productTable = new ProductTable();
+        handleDeleteButton(event, productTable);
       });
     });
   });

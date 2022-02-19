@@ -1,3 +1,4 @@
+import { fetchProducts } from "..";
 import ProductTable from "../productTable";
 
 export function handleProductImage(imageElement) {
@@ -10,14 +11,14 @@ export function handleProductImage(imageElement) {
 export function handleProductName(name) {
   const nameElement = document.getElementById("title");
   if (nameElement) {
-    nameElement.insertAdjacentText("beforebegin", name);
+    nameElement.insertAdjacentText("beforeend", name);
   }
 }
 
 export function handleProductPrice(price) {
   const priceElement = document.getElementById("price");
   if (priceElement) {
-    priceElement.insertAdjacentText("beforebegin", price);
+    priceElement.insertAdjacentText("beforeend", price);
   }
 }
 export function handleProductDescription(description) {
@@ -29,7 +30,7 @@ export function handleProductDescription(description) {
 
 export function handleColors(colorElementArray) {
   const selector = document.getElementById("colors");
-  selector.insertAdjacentHTML("beforebegin", colorElementArray);
+  selector.insertAdjacentHTML("beforeend", colorElementArray);
 }
 
 export function handleCartButtonClick() {
@@ -39,12 +40,11 @@ export function handleCartButtonClick() {
   button.addEventListener("click", () => {
     const quantity = document.getElementById("quantity").value;
     const color = document.getElementById("colors").value;
-    const product = Object.assign(
-      {},
-      { quantity, color },
-      productTable.get(id)
-    );
     const productTable = new ProductTable();
-    productTable.write(product);
+    fetchProducts(id).then((currentProduct) => {
+      const product = Object.assign({}, { quantity, color }, currentProduct);
+      delete product.colors;
+      productTable.write(product);
+    });
   });
 }

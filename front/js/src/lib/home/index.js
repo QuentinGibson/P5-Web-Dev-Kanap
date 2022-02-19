@@ -1,11 +1,11 @@
-import { createProductElement } from "../../generators/createProductElement";
+import createProductElement from "../../generators/createProductElement";
 
 export function handleProducts(products) {
   const container = document.getElementById("items");
   if (products) {
     for (let product of products) {
       const element = createProductElement(product);
-      container.insertAdjacentHTML("beforeend", element);
+      container.appendChild(element);
     }
   } else {
     throw new Error("Pass in products to handleProducts");
