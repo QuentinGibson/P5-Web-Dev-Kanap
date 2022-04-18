@@ -1,0 +1,4 @@
+{
+  "jest.jestCommandLine": "source ~/.zshrc && npm run test --",
+  "jest.shell": "/bin/zsh"
+}
