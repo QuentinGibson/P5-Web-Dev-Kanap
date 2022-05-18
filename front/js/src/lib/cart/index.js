@@ -1,4 +1,3 @@
-export function postProductTable() {}
 export function handleDeleteButton(event, productTable) {
   const index = event.target.getAttribute("table-index");
   productTable.remove(index);
