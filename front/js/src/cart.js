@@ -59,8 +59,10 @@ window.addEventListener("load", () => {
         const { orderId } = res;
         window.location.href =
           window.location.origin +
-          `front/html/confirmation.html?orderId=${orderId}`;
+          `/front/html/confirmation.html?orderId=${orderId}`;
       })
-      .catch((_error) => console.log("Could not fetch order number"));
+      .catch((_error) =>
+        console.log("Could not fetch order number: " + _error)
+      );
   });
 });
