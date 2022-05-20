@@ -49,7 +49,9 @@ export function addEventListenersForCart(inputElements, deleteButtons) {
 export function getTotalQuantitiy() {
   const productTable = new ProductTable();
   const quantityMap = productTable.table.map((product) => product.quantity);
-  return quantityMap.reduce((a, b) => Number(a) + Number(b));
+  if (quantityMap.length) {
+    return quantityMap.reduce((a, b) => Number(a) + Number(b));
+  }
 }
 
 export function getTotalPrice() {
@@ -57,7 +59,9 @@ export function getTotalPrice() {
   const quantityMap = productTable.table.map(
     (product) => product.price * product.quantity
   );
-  return quantityMap.reduce((a, b) => Number(a) + Number(b));
+  if (quantityMap.length) {
+    return quantityMap.reduce((a, b) => Number(a) + Number(b));
+  }
 }
 
 export function updateTotal() {
