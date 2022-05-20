@@ -3,6 +3,7 @@ import {
   addEventListenersForCart,
   getTotalPrice,
   getTotalQuantitiy,
+  updateTotal,
 } from "./lib/cart";
 import ProductTable from "./lib/productTable";
 
@@ -24,15 +25,10 @@ window.addEventListener("load", () => {
   const inputElements = [...document.getElementsByName("itemQuantity")];
   const deleteButtons = [...document.getElementsByClassName("deleteItem")];
   const productTable = new ProductTable();
-  const totalQuantityElement = document.querySelector("#totalQuantity");
   const form = document.getElementsByClassName("cart__order__form")[0];
-  const totalPriceElement = document.querySelector("#totalPrice");
-  const totalQuantity = getTotalQuantitiy(productTable);
-  const totalPrice = getTotalPrice(productTable);
 
-  addEventListenersForCart(inputElements, deleteButtons, productTable);
-  totalQuantityElement.insertAdjacentText("beforeend", totalQuantity);
-  totalPriceElement.insertAdjacentText("beforeend", totalPrice);
+  updateTotal();
+  addEventListenersForCart(inputElements, deleteButtons);
   form.addEventListener("submit", (event) => {
     const firstName = document.getElementsByName("firstName")[0].value;
     const lastName = document.getElementsByName("lastName")[0].value;
@@ -62,7 +58,8 @@ window.addEventListener("load", () => {
       .then((res) => {
         const { orderId } = res;
         window.location.href =
-          window.location.origin + `/html/confirmation.html?orderId=${orderId}`;
+          window.location.origin +
+          `front/html/confirmation.html?orderId=${orderId}`;
       })
       .catch((_error) => console.log("Could not fetch order number"));
   });
