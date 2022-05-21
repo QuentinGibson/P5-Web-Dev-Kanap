@@ -32,13 +32,19 @@ describe("cart page:", () => {
       expect(cart.length).toBeGreaterThan(0);
     });
     describe("Event Listeners", () => {
+      beforeAll(() => {
+        document.body.innerHTML = `
+        <div id="totalQuantity"></div>
+        <div id="totalPrice"></div>
+      `;
+      });
       test("event handler for input should update table", () => {
-        const productTable = new ProductTable();
         const event = { target: { value: 30, getAttribute: () => 0 } };
         const index = 0;
+        const productTable = new ProductTable();
         let table = productTable.table;
         const product = table[index];
-        handleChange(event, productTable);
+        handleChange(event);
         productTable.fetch();
         table = product.table;
         const expected = Object.assign({}, { quantity: 30 }, product);
@@ -47,8 +53,7 @@ describe("cart page:", () => {
 
       test("event handler for delete button should delete element from product table", () => {
         const event = { target: { getAttribute: () => 0, closest: () => 0 } };
-        const productTable = new ProductTable();
-        handleDeleteButton(event, productTable);
+        handleDeleteButton(event);
       });
     });
   });
